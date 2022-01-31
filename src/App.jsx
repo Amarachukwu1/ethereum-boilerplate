@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-// @ts-ignore
-import WalletConnectLogo from "../logos/walletconnect-circle.svg";
 import { useMoralis } from "react-moralis";
 import {
   BrowserRouter as Router,
@@ -58,6 +56,8 @@ const styles = {
     fontWeight: "600",
   },
 };
+
+const App = ({ isServerInfo }) => {
 
 const ConnectToWalletConnect = (
   WalletConnectProvider: any,
