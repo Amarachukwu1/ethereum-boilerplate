@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+// @ts-ignore
+import WalletConnectLogo from "../logos/walletconnect-circle.svg";
 import { useMoralis } from "react-moralis";
 import {
   BrowserRouter as Router,
@@ -24,6 +26,7 @@ import Text from "antd/lib/typography/Text";
 import Ramper from "components/Ramper";
 import MenuItems from "./components/MenuItems";
 const { Header, Footer } = Layout;
+
 
 const styles = {
   content: {
