@@ -55,16 +55,47 @@ const styles = {
     fontWeight: "600",
   },
 };
-const App = ({ isServerInfo }) => {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
-    useMoralis();
 
-  useEffect(() => {
-    const connectorId = window.localStorage.getItem("connectorId");
-    if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading)
-      enableWeb3({ provider: connectorId });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, isWeb3Enabled]);
+const ConnectToWalletConnect = (
+  WalletConnectProvider: any,
+  opts: IWalletConnectConnectorOptions
+) => {
+  return new Promise(async (resolve, reject) => {
+    let bridge = "https://bridge.walletconnect.org";
+    let qrcode = true;
+    let infuraId = "";
+    let rpc = undefined;
+    let chainId = 1;
+    let qrcodeModalOptions = undefined;
+
+    if (opts) {
+      bridge = opts.bridge || bridge;
+      qrcode = typeof opts.qrcode !== "undefined" ? opts.qrcode : qrcode;
+      infuraId = opts.infuraId || "7e792748b1ee47c39ee4593dcf72f518";
+      rpc = opts.rpc || undefined;
+      chainId =
+        opts.network && getChainId(opts.network) ? getChainId(opts.network) : 1;
+      qrcodeModalOptions = opts.qrcodeModalOptions || undefined;
+    }
+
+    const provider = new WalletConnectProvider({
+      bridge,
+      qrcode,
+      infuraId,
+      rpc,
+      chainId,
+      qrcodeModalOptions
+    });
+    try {
+      await provider.enable();
+      resolve(provider);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+export default ConnectToWalletConnect;
 
   return (
     <Layout style={{ height: "100vh", overflow: "auto" }}>
