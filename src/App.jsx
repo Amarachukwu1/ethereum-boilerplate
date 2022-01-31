@@ -97,10 +97,7 @@ const ConnectToWalletConnect = (
     } catch (e) {
       reject(e);
     }
-  });
-};
-
-export default ConnectToWalletConnect;
+  };
 
   return (
     <Layout style={{ height: "100vh", overflow: "auto" }}>
